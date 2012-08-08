@@ -218,9 +218,12 @@ ${INIT_COOKIE}:
 	@echo "===>   Creating fake install tree"
 	rm -rf ${WRKINST}
 	mkdir -p ${WRKINST}
-.for _pkg in base comp etc game man misc
+.for _pkg in base comp etc game man
 	tar xzpf ${DISTDIR}/${ARCH}/${_pkg}${OSrev}.tgz -C ${WRKINST}
 .endfor
+.if exists(${DISTDIR}/${ARCH}/misc${OSrev}.tgz)
+	tar xzpf ${DISTDIR}/${ARCH}/misc${OSrev}.tgz -C ${WRKINST}
+.endif
 	cp -p ${DISTDIR}/${ARCH}/bsd ${WRKINST} && \
 	touch -f ${.TARGET}
 
